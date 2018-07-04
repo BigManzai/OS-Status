@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html>
+
+<!--
+
+OpenSimulator Statistik Informationen
+
+Edit OpenSim.ini und füge folgendes ein:
+
+   ; Simulator Stats URI
+   ; Enable JSON simulator data by setting a URI name (case sensitive)
+   Stats_URI = "jsonSimStats"
+   
+Suche und editiere diese Skript und ändere die Zeilen:
+   
+adress = "http://yourhome.net_or_IP:yourPORT";
+time = millisecond; 3000 kann höher eingestellt werden dann ist die last auf dem Server nicht so hoch.
+
+-->
+
+<head>
+<title>OpenSimulator Status</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" language="JavaScript">
+
+adress = "http://127.0.0.1:9000";
+time = 3000;
+ 
+SimFPS = 0;
+PhyFPS = 0;
+Memory = 0;
+RootAg = 0;
+ChldAg = 0;
+Uptime = "";
+Version = "";
+Dilatn = 0;
+AgntUp = 0;
+Prims = 0;
+AtvPrm = 0;
+AtvScr = 0;
+ScrLPS = 0;
+PktsIn = 0;
+PktOut = 0;
+PendDl = 0;
+PendUl = 0;
+UnackB = 0;
+TotlFt = 0;
+NetFt = 0;
+PhysFt = 0;
+OthrFt = 0;
+AgntFt = 0;
+ImgsFt = 0;
+FrameDilatn = 0;
+GeoPrims = "";
+ProcMem = "";
+
+LogginginUsers = 0;
+MeshObjects = 0;
+XEngineThreadCount = 0;
+UtilThreadCount = 0;
+SystemThreadCount = 0;
+ 
+setInterval(function(){
+$.getJSON(
+  adress + "/jsonSimStats/?callback=?",  
+  function(data){
+    SimFPS = Math.round(data.SimFPS);
+    PhyFPS = Math.round(data.PhyFPS);
+    Memory = Math.round(data.Memory);
+    ChldAg = data.ChldAg;
+    RootAg = data.RootAg;
+    Uptime = data.Uptime;
+    Version = data.Version;
+    Dilatn = data.Dilatn;
+    AgntUp = data.AgntUp;
+    Prims = data.Prims;
+    AtvPrm = data.AtvPrm;
+    AtvScr = data.AtvScr;
+    ScrLPS = data.ScrLPS;
+    PktsIn = data.PktsIn;
+    PktOut = data.PktOut;
+    PendDl = data.PendDl;
+    PendUl = data.PendUl;
+    UnackB = data.UnackB;
+    TotlFt = data.TotlFt;
+    NetFt = data.NetFt;
+    PhysFt = data.PhysFt;
+    OthrFt = data.OthrFt;
+    AgntFt = data.AgntFt;
+    ImgsFt = data.ImgsFt;
+    FrameDilatn = data.FrameDilatn;
+    GeoPrims = data.GeoPrims;
+    ProcMem = data.ProcMem;
+    
+    LogginginUsers = data.LogginginUsers;
+    MeshObjects = data.MeshObjects;
+    XEngineThreadCount = data.XEngineThreadCount;
+    UtilThreadCount = data.UtilThreadCount;
+    SystemThreadCount = data.SystemThreadCount;
+  setTags();
+  })}, time
+);
+ 
+ 
+$(function() {
+    timer.start(100);
+    });
+ 
+function setTags()
+{
+  $("#par-SimFPS").text("Simulator Bilder per Sekunde: "  + SimFPS);
+  $("#par-PhyFPS").text("Physikalische Bilder per Sekunde: " + PhyFPS);
+  $("#par-Memory").text("Gesamtspeicher: " + Memory + " MB");
+  $("#par-uptime").text("Gesamt Betriebszeit: "  + Uptime);
+  $("#par-ragent").text("Root Avatare: " + RootAg);
+  $("#par-version").text("Version: " + Version);
+  $("#par-cagent").text("Gast Avatare: " + ChldAg);
+  $("#par-Dilatn").text("Zeitdehnung: "  + Dilatn);
+  $("#par-AgntUp").text("Avatar Aktualisierungen: " + AgntUp);
+  $("#par-Prims").text("Gesamtprims: " + Prims);
+  $("#par-AtvPrm").text("Aktive Prims: " + AtvPrm);
+  $("#par-AtvScr").text("Aktive Skripte: "  + AtvScr);
+  $("#par-ScrLPS").text("Skriptzeilen pro Sekunde: "  + ScrLPS);
+  $("#par-PktsIn").text("Paketeingang pro Sekunde: "  + PktsIn);
+  $("#par-PktOut").text("Paketausgang pro Sekunde: "  + PktOut);
+  $("#par-PendDl").text("Anstehende Downloads: "  + PendDl);
+  $("#par-PendUl").text("Ausstehende Uploads: "  + PendUl);
+  $("#par-UnackB").text("Unbestaetigte Bytes: "  + UnackB);
+  $("#par-TotlFt").text("Gesamtrahmenzeit: "  + TotlFt);
+  $("#par-NetFt").text("Net Rahmenzeit: "  + NetFt);
+  $("#par-PhysFt").text("Physikrahmenzeit: "  + PhysFt);
+  $("#par-OthrFt").text("Unbestimmte Rahmenzeit: "  + OthrFt);
+  $("#par-AgntFt").text("Avatar Rahmenzeit: "  + AgntFt);
+  $("#par-ImgsFt").text("Bildrahmenzeit: "  + ImgsFt);
+  $("#par-FrameDilatn").text("Rahmenzeitdilatation: "  + FrameDilatn);
+  $("#par-GeoPrims").text("Geometrische Prim Objekte: "  + GeoPrims);
+  $("#par-ProcMem").text("Physischer Speicher im Einsatz: "  + ProcMem);
+ 
+  $("#par-LogginginUsers").text("Benutzer Anmeldungen: "  + LogginginUsers);
+  $("#par-MeshObjects").text("Mesh Objekte: "  + MeshObjects);
+  $("#par-XEngineThreadCount").text("XEngine Threads Anzahl: "  + XEngineThreadCount);
+  $("#par-UtilThreadCount").text("Nuetzliche Thread Anzahl: "  + UtilThreadCount);
+  $("#par-SystemThreadCount").text("Anzahl der Systemthreads: "  + SystemThreadCount);
+ 
+}
+</script>
+ 
+</head>
+<body>
+
+<div class="w3-container w3-teal w3-animate-zoom">
+  <h4>OpenSimulator Status</h4>
+
+  </div>
+  <div class="w3-panel w3-card w3-text-dark-grey">
+ <table class="w3-table-all w3-medium w3-hoverable w3-animate-zoom">
+ 
+    <tr><td>
+ <div class="w3-container w3-teal">Server</div>
+        </td></tr><tr><td>    
+        
+    <div id="par-version">version</div>
+        </td></tr><tr><td>
+    <div id="par-SimFPS">SimFPS</div>
+        </td></tr><tr><td>
+    <div id="par-PhyFPS">PhyFPS</div>
+        </td></tr><tr><td>
+    <div id="par-Memory">Memory</div>
+        </td></tr><tr><td>
+    <div id="par-ProcMem">ProcMem</div>
+        </td></tr><tr><td>        
+    <div id="par-uptime">uptime</div>
+        </td></tr><tr><td>
+        
+    
+ <div class="w3-container w3-teal">Avatare</div>
+        </td></tr><tr><td>        
+
+        
+    <div id="par-ragent">root agent</div>
+        </td></tr><tr><td>
+    <div id="par-cagent">child agent</div>
+        </td></tr><tr><td>
+    <div id="par-AgntUp">AgntUp</div>    
+        </td></tr><tr><td>        
+    <div id="par-LogginginUsers">LogginginUsers</div>
+        </td></tr><tr><td>
+        
+        
+ <div class="w3-container w3-teal">Objekte</div>
+        </td></tr><tr><td>        
+        
+        
+
+    <div id="par-MeshObjects">MeshObjects</div>
+        </td></tr><tr><td>
+    <div id="par-GeoPrims">GeoPrims</div>
+        </td></tr><tr><td>
+    <div id="par-AtvPrm">AtvPrm</div>
+        </td></tr><tr><td>
+    <div id="par-Prims">Prims</div>
+        </td></tr><tr><td>
+        
+        
+ <div class="w3-container w3-teal">Skripte</div>
+        </td></tr><tr><td>        
+        
+        
+    <div id="par-AtvScr">AtvScr</div>
+        </td></tr><tr><td>
+    <div id="par-ScrLPS">ScrLPS</div>
+        </td></tr><tr><td>
+        
+        
+ <div class="w3-container w3-teal">Ein-Ausgang</div>
+        </td></tr><tr><td>        
+        
+        
+    <div id="par-PktsIn">PktsIn</div>
+        </td></tr><tr><td>
+    <div id="par-PktOut">PktOut</div>
+        </td></tr><tr><td>
+    <div id="par-PendDl">PendDl</div>
+        </td></tr><tr><td>
+    <div id="par-PendUl">PendUl</div>
+        </td></tr><tr><td>
+    <div id="par-UnackB">UnackB</div>
+        </td></tr><tr><td>
+        
+        
+ <div class="w3-container w3-teal">Frame Rahmen</div>
+        </td></tr><tr><td>        
+        
+        
+    <div id="par-TotlFt">TotlFt</div>
+        </td></tr><tr><td>
+    <div id="par-NetFt">NetFt</div>
+        </td></tr><tr><td>
+    <div id="par-PhysFt">PhysFt</div>
+        </td></tr><tr><td>
+    <div id="par-OthrFt">OthrFt</div>      
+        </td></tr><tr><td>
+    <div id="par-AgntFt">AgntFt</div>
+        </td></tr><tr><td>
+    <div id="par-ImgsFt">ImgsFt</div>
+        </td></tr><tr><td>
+    <div id="par-Dilatn">Dilatn</div>    
+        </td></tr><tr><td>        
+    <div id="par-FrameDilatn">FrameDilatn</div>
+        </td></tr><tr><td>
+        
+        
+ <div class="w3-container w3-teal">Threads</div>
+        </td></tr><tr><td>    
+        
+        
+    <div id="par-XEngineThreadCount">XEngineThreadCount</div>
+        </td></tr><tr><td>
+    <div id="par-UtilThreadCount">UtilThreadCount</div>
+        </td></tr><tr><td>
+    <div id="par-SystemThreadCount">SystemThreadCount</div>
+        </td></tr><tr><td>
+        
+</table>
+</p></div>
+<div id="chart_div"></div>
+</body>
+</html>
